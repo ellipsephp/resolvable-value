@@ -7,7 +7,7 @@ use ReflectionParameter;
 
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
 
-class UnresolvedValueException extends RuntimeException implements ResolvingExceptionInterface
+class ExecutionFailedException extends RuntimeException implements ResolvingExceptionInterface
 {
     public function __construct()
     {

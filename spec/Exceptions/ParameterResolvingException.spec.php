@@ -3,9 +3,9 @@
 use function Eloquent\Phony\Kahlan\mock;
 
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
-use Ellipse\Resolvable\Exceptions\UnresolvedParameterException;
+use Ellipse\Resolvable\Exceptions\ParameterResolvingException;
 
-describe('UnresolvedParameterException', function () {
+describe('ParameterResolvingException', function () {
 
     beforeEach(function () {
 
@@ -13,7 +13,7 @@ describe('UnresolvedParameterException', function () {
 
         $this->delegate = mock([Exception::class, ResolvingExceptionInterface::class]);
 
-        $this->exception = new UnresolvedParameterException($this->parameter->get(), $this->delegate->get());
+        $this->exception = new ParameterResolvingException($this->parameter->get(), $this->delegate->get());
 
     });
 

@@ -9,7 +9,7 @@ use Ellipse\Resolvable\Executions\ExecutionWithPlaceholder;
 use Ellipse\Resolvable\Executions\ExecutionWithDefaultValue;
 use Ellipse\Resolvable\Executions\FaillingExecution;
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
-use Ellipse\Resolvable\Exceptions\UnresolvedParameterException;
+use Ellipse\Resolvable\Exceptions\ParameterResolvingException;
 
 class ResolvedValueFactory
 {
@@ -48,7 +48,7 @@ class ResolvedValueFactory
      * @param array     $parameters
      * @param array     $placeholders
      * @return mixed
-     * @throws \Ellipse\Resolvable\Exceptions\UnresolvedParameterException
+     * @throws \Ellipse\Resolvable\Exceptions\ParameterResolvingException
      */
     public function __invoke(callable $factory, array $parameters, array $placeholders)
     {
@@ -62,7 +62,7 @@ class ResolvedValueFactory
 
             }
 
-            catch (UnresolvedParameterException $e) {
+            catch (ParameterResolvingException $e) {
 
                 throw $e;
 
@@ -70,7 +70,7 @@ class ResolvedValueFactory
 
             catch (ResolvingExceptionInterface $e) {
 
-                throw new UnresolvedParameterException($parameter, $e);
+                throw new ParameterResolvingException($parameter, $e);
 
             }
 

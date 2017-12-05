@@ -5,7 +5,7 @@ namespace Ellipse\Resolvable\Exceptions;
 use RuntimeException;
 use ReflectionParameter;
 
-class UnresolvedParameterException extends RuntimeException implements ResolvingExceptionInterface
+class ParameterResolvingException extends RuntimeException implements ResolvingExceptionInterface
 {
     /**
      * The unresolved parameter.

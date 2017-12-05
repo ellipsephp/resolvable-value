@@ -4,7 +4,7 @@ namespace Ellipse\Resolvable\Executions;
 
 use ReflectionParameter;
 
-use Ellipse\Resolvable\Executions\Exceptions\UnresolvedValueException;
+use Ellipse\Resolvable\Executions\Exceptions\ExecutionFailedException;
 
 class FaillingExecution implements ExecutionInterface
 {
@@ -13,6 +13,6 @@ class FaillingExecution implements ExecutionInterface
      */
     public function __invoke(callable $factory, ReflectionParameter $parameter, array $tail, array $placeholders)
     {
-        throw new UnresolvedValueException;
+        throw new ExecutionFailedException;
     }
 }

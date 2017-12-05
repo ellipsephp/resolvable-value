@@ -3,13 +3,13 @@
 use function Eloquent\Phony\Kahlan\mock;
 
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
-use Ellipse\Resolvable\Executions\Exceptions\UnresolvedValueException;
+use Ellipse\Resolvable\Executions\Exceptions\ExecutionFailedException;
 
-describe('UnresolvedValueException', function () {
+describe('ExecutionFailedException', function () {
 
     it('should implement ResolvingExceptionInterface', function () {
 
-        $test = new UnresolvedValueException;
+        $test = new ExecutionFailedException;
 
         expect($test)->toBeAnInstanceOf(ResolvingExceptionInterface::class);
 

@@ -5,7 +5,7 @@ use function Eloquent\Phony\Kahlan\mock;
 
 use Ellipse\Resolvable\Executions\ExecutionInterface;
 use Ellipse\Resolvable\Executions\FaillingExecution;
-use Ellipse\Resolvable\Executions\Exceptions\UnresolvedValueException;
+use Ellipse\Resolvable\Executions\Exceptions\ExecutionFailedException;
 
 describe('FaillingExecution', function () {
 
@@ -23,7 +23,7 @@ describe('FaillingExecution', function () {
 
     describe('->__invoke()', function () {
 
-        it('should throw an UnresolvedValueException', function () {
+        it('should throw an ExecutionFailedException', function () {
 
             $resolvable = stub();
 
@@ -42,7 +42,7 @@ describe('FaillingExecution', function () {
 
             };
 
-            $exception = new UnresolvedValueException($parameter);
+            $exception = new ExecutionFailedException($parameter);
 
             expect($test)->toThrow($exception);
 

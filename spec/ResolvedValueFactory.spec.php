@@ -8,8 +8,8 @@ use Psr\Container\ContainerInterface;
 use Ellipse\Resolvable\ResolvedValueFactory;
 use Ellipse\Resolvable\Executions\ExecutionInterface;
 use Ellipse\Resolvable\Executions\ExecutionWithTypeHint;
-use Ellipse\Resolvable\Exceptions\UnresolvedParameterException;
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
+use Ellipse\Resolvable\Exceptions\ParameterResolvingException;
 
 describe('ResolvedValueFactory', function () {
 
@@ -55,12 +55,12 @@ describe('ResolvedValueFactory', function () {
 
             });
 
-            context('when an UnresolvedParameterException is thrown', function () {
+            context('when an ParameterResolvingException is thrown', function () {
 
                 it('should be propagated', function () {
 
                     $factory = stub();
-                    $exception = mock(UnresolvedParameterException::class)->get();
+                    $exception = mock(ParameterResolvingException::class)->get();
 
                     $this->delegate->__invoke
                         ->with($factory, $this->parameter1, [$this->parameter2], $this->placeholders)
@@ -80,7 +80,7 @@ describe('ResolvedValueFactory', function () {
 
             context('when an ResolvingExceptionInterface is thrown', function () {
 
-                it('should be wrapped inside an UnresolvedParameterException', function () {
+                it('should be wrapped inside an ParameterResolvingException', function () {
 
                     $factory = stub();
                     $exception = mock([Exception::class, ResolvingExceptionInterface::class])->get();
@@ -95,7 +95,7 @@ describe('ResolvedValueFactory', function () {
 
                     };
 
-                    $exception = new UnresolvedParameterException($this->parameter1, $exception);
+                    $exception = new ParameterResolvingException($this->parameter1, $exception);
 
                     expect($test)->toThrow($exception);
 
