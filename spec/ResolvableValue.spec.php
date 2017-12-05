@@ -5,6 +5,7 @@ use function Eloquent\Phony\Kahlan\mock;
 
 use Psr\Container\ContainerInterface;
 
+use Ellipse\Resolvable\ResolvableValueInterface;
 use Ellipse\Resolvable\ResolvableValue;
 use Ellipse\Resolvable\ResolvedValueFactory;
 
@@ -19,6 +20,12 @@ describe('ResolvableValue', function () {
         ];
 
         $this->resolvable = new ResolvableValue($this->factory, $this->parameters);
+
+    });
+
+    it('should implement ResolvableValueInterface', function () {
+
+        expect($this->resolvable)->toBeAnInstanceOf(ResolvableValueInterface::class);
 
     });
 

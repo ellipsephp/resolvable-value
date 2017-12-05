@@ -4,7 +4,7 @@ namespace Ellipse\Resolvable;
 
 use Psr\Container\ContainerInterface;
 
-class ResolvableValue
+class ResolvableValue implements ResolvableValueInterface
 {
     /**
      * The factory used to produce the resolved value.
@@ -34,13 +34,9 @@ class ResolvableValue
     }
 
     /**
-     * Return the resolved value using the given container and placeholders.
-     *
-     * @param \Ellipse\Container\ContainerInterface     $container
-     * @param array                                     $placeholders
-     * @return mixed
+     * @inheritdoc
      */
-    public function value(ContainerInterface $container, array $placeholders)
+    public function value(ContainerInterface $container, array $placeholders = [])
     {
         $factory = new ResolvedValueFactory($container);
 
