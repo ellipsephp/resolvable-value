@@ -3,7 +3,6 @@
 namespace Ellipse\Resolvable\Executions\Exceptions;
 
 use RuntimeException;
-use ReflectionParameter;
 
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
 

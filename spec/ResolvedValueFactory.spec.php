@@ -80,10 +80,10 @@ describe('ResolvedValueFactory', function () {
 
             context('when an ResolvingExceptionInterface is thrown', function () {
 
-                it('should be wrapped inside an ParameterResolvingException', function () {
+                it('should be wrapped inside a ParameterResolvingException', function () {
 
                     $factory = stub();
-                    $exception = mock([Exception::class, ResolvingExceptionInterface::class])->get();
+                    $exception = mock([Throwable::class, ResolvingExceptionInterface::class])->get();
 
                     $this->delegate->__invoke
                         ->with($factory, $this->parameter1, [$this->parameter2], $this->placeholders)

@@ -11,9 +11,9 @@ describe('ParameterResolvingException', function () {
 
         $this->parameter = mock(ReflectionParameter::class);
 
-        $this->delegate = mock([Exception::class, ResolvingExceptionInterface::class]);
+        $delegate = mock([Throwable::class, ResolvingExceptionInterface::class])->get();
 
-        $this->exception = new ParameterResolvingException($this->parameter->get(), $this->delegate->get());
+        $this->exception = new ParameterResolvingException($this->parameter->get(), $delegate);
 
     });
 

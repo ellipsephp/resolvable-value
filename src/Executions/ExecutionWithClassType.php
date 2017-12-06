@@ -5,9 +5,11 @@ namespace Ellipse\Resolvable\Executions;
 use ReflectionParameter;
 
 use Psr\Container\ContainerInterface;
+use Psr\Container\ContainerExceptionInterface;
 
 use Ellipse\Resolvable\ResolvedValueFactory;
 use Ellipse\Resolvable\PartiallyResolvedValue;
+use Ellipse\Resolvable\Executions\Exceptions\ClassResolvingException;
 
 class ExecutionWithClassType implements ExecutionInterface
 {
@@ -56,7 +58,17 @@ class ExecutionWithClassType implements ExecutionInterface
 
             if (! $type->isBuiltIn()) {
 
-                $value = $this->container->get((string) $type);
+                try {
+
+                    $value = $this->container->get((string) $type);
+
+                }
+
+                catch (ContainerExceptionInterface $e) {
+
+                    throw new ClassResolvingException($e);
+
+                }
 
                 return ($this->factory)(new PartiallyResolvedValue($factory, $value), $tail, $placeholders);
 

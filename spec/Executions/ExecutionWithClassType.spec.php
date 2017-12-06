@@ -4,11 +4,13 @@ use function Eloquent\Phony\Kahlan\stub;
 use function Eloquent\Phony\Kahlan\mock;
 
 use Psr\Container\ContainerInterface;
+use Psr\Container\ContainerExceptionInterface;
 
 use Ellipse\Resolvable\ResolvedValueFactory;
 use Ellipse\Resolvable\PartiallyResolvedValue;
 use Ellipse\Resolvable\Executions\ExecutionInterface;
 use Ellipse\Resolvable\Executions\ExecutionWithClassType;
+use Ellipse\Resolvable\Executions\Exceptions\ClassResolvingException;
 
 describe('ExecutionWithClassType', function () {
 
@@ -61,24 +63,54 @@ describe('ExecutionWithClassType', function () {
 
             context('when the type is not a built in type (= is a class name)', function () {
 
-                it('should proxy the factory with the instance retrieved with the container ->get() method', function () {
-
-                    $instance = new class {};
+                beforeEach(function () {
 
                     $this->type->isBuiltIn->returns(false);
                     $this->type->__toString->returns('class');
 
-                    $this->container->get->with('class')->returns($instance);
+                });
 
-                    $resolved = new PartiallyResolvedValue($this->resolvable, $instance);
+                context('when the container ->get() method does not throw a ContainerExceptionInterface', function () {
 
-                    $this->factory->__invoke
-                        ->with($resolved, $this->tail, $this->placeholders)
-                        ->returns('value');
+                    it('should proxy the factory with the instance retrieved with the container ->get() method', function () {
 
-                    $test = ($this->execution)($this->resolvable, $this->parameter->get(), $this->tail, $this->placeholders);
+                        $instance = new class {};
 
-                    expect($test)->toEqual('value');
+                        $this->container->get->with('class')->returns($instance);
+
+                        $resolved = new PartiallyResolvedValue($this->resolvable, $instance);
+
+                        $this->factory->__invoke
+                            ->with($resolved, $this->tail, $this->placeholders)
+                            ->returns('value');
+
+                        $test = ($this->execution)($this->resolvable, $this->parameter->get(), $this->tail, $this->placeholders);
+
+                        expect($test)->toEqual('value');
+
+                    });
+
+                });
+
+                context('when the container ->get() method throws a ContainerExceptionInterface', function () {
+
+                    it('should be wrapped inside a ClassResolvingException', function () {
+
+                        $exception = mock([Throwable::class, ContainerExceptionInterface::class])->get();
+
+                        $this->container->get->with('class')->throws($exception);
+
+                        $test = function () {
+
+                            ($this->execution)($this->resolvable, $this->parameter->get(), $this->tail, $this->placeholders);
+
+                        };
+
+                        $exception = new ClassResolvingException($exception);
+
+                        expect($test)->toThrow($exception);
+
+                    });
 
                 });
 
