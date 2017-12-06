@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 use Ellipse\Resolvable\ResolvedValueFactory;
 use Ellipse\Resolvable\Executions\ExecutionInterface;
-use Ellipse\Resolvable\Executions\ExecutionWithTypeHint;
+use Ellipse\Resolvable\Executions\ExecutionWithClassType;
 use Ellipse\Resolvable\Exceptions\ResolvingExceptionInterface;
 use Ellipse\Resolvable\Exceptions\ParameterResolvingException;
 
@@ -17,7 +17,7 @@ describe('ResolvedValueFactory', function () {
 
         $this->delegate = mock(ExecutionInterface::class);
 
-        allow(ExecutionWithTypeHint::class)->toBe($this->delegate->get());
+        allow(ExecutionWithClassType::class)->toBe($this->delegate->get());
 
         $this->container = mock(ContainerInterface::class);
 

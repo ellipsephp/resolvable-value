@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 use Ellipse\Resolvable\ResolvedValueFactory;
 use Ellipse\Resolvable\PartiallyResolvedValue;
 
-class ExecutionWithTypeHint implements ExecutionInterface
+class ExecutionWithClassType implements ExecutionInterface
 {
     /**
      * The resolved value factory.
@@ -52,13 +52,15 @@ class ExecutionWithTypeHint implements ExecutionInterface
      */
     public function __invoke(callable $factory, ReflectionParameter $parameter, array $tail, array $placeholders)
     {
-        if ($class = $parameter->getClass()) {
+        if ($type = $parameter->getType()) {
 
-            $name = $class->getName();
+            if (! $type->isBuiltIn()) {
 
-            $value = $this->container->get($name);
+                $value = $this->container->get((string) $type);
 
-            return ($this->factory)(new PartiallyResolvedValue($factory, $value), $tail, $placeholders);
+                return ($this->factory)(new PartiallyResolvedValue($factory, $value), $tail, $placeholders);
+
+            }
 
         }
 

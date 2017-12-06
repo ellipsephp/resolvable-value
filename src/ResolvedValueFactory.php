@@ -4,7 +4,7 @@ namespace Ellipse\Resolvable;
 
 use Psr\Container\ContainerInterface;
 
-use Ellipse\Resolvable\Executions\ExecutionWithTypeHint;
+use Ellipse\Resolvable\Executions\ExecutionWithClassType;
 use Ellipse\Resolvable\Executions\ExecutionWithPlaceholder;
 use Ellipse\Resolvable\Executions\ExecutionWithDefaultValue;
 use Ellipse\Resolvable\Executions\FaillingExecution;
@@ -27,7 +27,7 @@ class ResolvedValueFactory
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->delegate = new ExecutionWithTypeHint(
+        $this->delegate = new ExecutionWithClassType(
             $this,
             $container,
             new ExecutionWithPlaceholder(
