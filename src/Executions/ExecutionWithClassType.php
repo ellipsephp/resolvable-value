@@ -66,7 +66,7 @@ class ExecutionWithClassType implements ExecutionInterface
 
                 catch (ContainerExceptionInterface $e) {
 
-                    throw new ClassResolvingException($e);
+                    throw new ClassResolvingException((string) $type, $e);
 
                 }
 

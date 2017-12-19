@@ -9,11 +9,13 @@ describe('ParameterResolvingException', function () {
 
     beforeEach(function () {
 
-        $this->parameter = mock(ReflectionParameter::class);
+        $parameter = mock(ReflectionParameter::class);
 
-        $delegate = mock([Throwable::class, ResolvingExceptionInterface::class])->get();
+        $parameter->__toString->returns('parameter');
 
-        $this->exception = new ParameterResolvingException($this->parameter->get(), $delegate);
+        $this->previous = mock([Throwable::class, ResolvingExceptionInterface::class])->get();
+
+        $this->exception = new ParameterResolvingException($parameter->get(), $this->previous);
 
     });
 
@@ -23,13 +25,13 @@ describe('ParameterResolvingException', function () {
 
     });
 
-    describe('->parameter()', function () {
+    describe('->getPrevious()', function () {
 
-        it('should return the parameter', function () {
+        it('should return the previous exception', function () {
 
-            $test = $this->exception->parameter();
+            $test = $this->exception->getPrevious();
 
-            expect($test)->toBe($this->parameter->get());
+            expect($test)->toBe($this->previous);
 
         });
 

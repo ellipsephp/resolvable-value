@@ -10,7 +10,7 @@ class ExecutionFailedException extends RuntimeException implements ResolvingExce
 {
     public function __construct()
     {
-        $msg = "Unable to infer a value (no class type hint, no placeholders available, no default value).";
+        $msg = "Unable to infer a value: no class type hint, no placeholder available and no default value.";
 
         parent::__construct($msg);
     }

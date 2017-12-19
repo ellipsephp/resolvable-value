@@ -9,13 +9,29 @@ use Ellipse\Resolvable\Executions\Exceptions\ClassResolvingException;
 
 describe('ClassResolvingException', function () {
 
+    beforeEach(function () {
+
+        $this->previous = mock([Throwable::class, ContainerExceptionInterface::class])->get();
+
+        $this->exception = new ClassResolvingException('class', $this->previous);
+
+    });
+
     it('should implement ResolvingExceptionInterface', function () {
 
-        $delegate = mock([Throwable::class, ContainerExceptionInterface::class])->get();
+        expect($this->exception)->toBeAnInstanceOf(ResolvingExceptionInterface::class);
 
-        $test = new ClassResolvingException($delegate);
+    });
 
-        expect($test)->toBeAnInstanceOf(ResolvingExceptionInterface::class);
+    describe('->getPrevious()', function () {
+
+        it('should return the previous exception', function () {
+
+            $test = $this->exception->getPrevious();
+
+            expect($test)->toBe($this->previous);
+
+        });
 
     });
 

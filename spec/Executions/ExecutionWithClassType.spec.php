@@ -106,7 +106,7 @@ describe('ExecutionWithClassType', function () {
 
                         };
 
-                        $exception = new ClassResolvingException($exception);
+                        $exception = new ClassResolvingException('class', $exception);
 
                         expect($test)->toThrow($exception);
 
